@@ -10,8 +10,8 @@ namespace ImageGenerator.Controllers
     [ApiController]
     public class ImageGeneratorController : ControllerBase
     {
-        [HttpGet()]
-        public IActionResult Get([FromQuery(Name = "color")] string color, [FromQuery(Name = "width")] int width, [FromQuery(Name = "height")] int height)
+        [HttpGet]
+        public IActionResult Get([FromQuery(Name = "width")] int width, [FromQuery(Name = "height")] int height, [FromQuery(Name = "color")] string color)
         {
             if (color == null)
                 return BadRequest();
