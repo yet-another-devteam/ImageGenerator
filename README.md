@@ -5,7 +5,7 @@ ImageGenerator is a project on ASP.NET Core that generates an image with one col
 
 ![alt text](https://raw.githubusercontent.com/yet-another-devteam/ImageGenerator/master/Screenshots/1.png "Example of result")
  
-To generate an image, you should specify parameters in the link and then make GET reqeust:
+To generate an image, you should specify parameters in the link and then make GET request:
 
 **DOMAIN**/ImageGenerator?width=**WIDTH OF IMAGE**&height=**HEIGHT OF IMAGE**&color=**RGB COLOR IN HEX**
 
