@@ -14,7 +14,8 @@ namespace ImageGenerator
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel(options => options.ListenAnyIP(4532));
+                    webBuilder.UseKestrel((context, options) =>
+                                              options.Configure(context.Configuration.GetSection("Kestrel")));
                     webBuilder.UseStartup<Startup>();
                 });
     }
