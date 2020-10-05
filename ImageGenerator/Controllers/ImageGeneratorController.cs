@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
@@ -15,7 +16,10 @@ namespace ImageGenerator.Controllers
         {
             if (color == null)
                 return BadRequest();
-            var rgba = Rgba32.FromHex(color);
+            
+            if(!Rgba32.TryParseHex(color, out Rgba32 rgba))
+                return BadRequest("Cannot parse color");
+            
             var image = new Image<Rgba32>(width, height);
             image.Mutate(ctx => ctx.Fill(rgba));
 
