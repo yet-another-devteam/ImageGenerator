@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -12,19 +14,16 @@ namespace ImageGenerator.Controllers
     public class ImageGeneratorController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get([FromQuery(Name = "width")] int width, [FromQuery(Name = "height")] int height, [FromQuery(Name = "color")] string color)
+        public async Task<IActionResult> Get([Range(1, 1024)] int width, [Range(1, 1024)] int height, [Required] string color)
         {
-            if (color == null)
-                return BadRequest();
-            
-            if(!Rgba32.TryParseHex(color, out Rgba32 rgba))
+            if (!Rgba32.TryParseHex(color, out Rgba32 rgba))
                 return BadRequest("Cannot parse color");
             
             var image = new Image<Rgba32>(width, height);
             image.Mutate(ctx => ctx.Fill(rgba));
 
             var stream = new MemoryStream();
-            image.SaveAsJpeg(stream);
+            await image.SaveAsJpegAsync(stream, HttpContext.RequestAborted);
 
             stream.Seek(0, SeekOrigin.Begin);
 
