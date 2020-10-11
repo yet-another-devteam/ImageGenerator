@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Web.DependencyInjection;
@@ -28,6 +29,8 @@ namespace ImageGenerator
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<ColorCalculator>();
+            services.AddSingleton(new FontCollection().Install("font.ttf"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
